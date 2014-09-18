@@ -40,14 +40,15 @@ def main():
 
 	""" Handle the given arguments based on the action """
 	# Create lists from discovered links
+	session = requests.Session()
 	discovered_links	= discovery.discoverLink( args['url'] )
-	guessed_links		= guessPage( args['url'] )
+	guessed_links		= discovery.guessPage( args['url'], args['common-words'], discovered_links, session )
 
 	# Merge the two lists for a full link array
 	all_links			= discovered_links + guessed_links
 
 	if args['fuzzer-action'] == 'discover':
-		discoverPrintOut( discovered_links )
+		discoverPrintOut( discovered_links, guessed_links )
 
 	else: # fuzzer action == 'test' from earlier check
 		pass
@@ -55,7 +56,7 @@ def main():
 
 
 def discoverPrintOut( discovered_links, guessed_links ):
-	print_input = raw_input( 'Discovery completed. Would you like the discovered links printed to:\n\t[d] - Document\n\t[t] - Terminal\n\t[b] - Both document and terminal\n\t[n] - Not Printed\nInput: ' )
+	print_input = raw_input( 'Discovery completed. Would you like the discovered links printed to:\n\t[d] - Document\n\t[t] - Terminal\n\t[b] - Both document and terminal\n\t[n] - Not Printed\nPrinting to document will overwrite previous printings.\nInput: ' )
 
 	if print_input == 't':
 		print( 'Discover Printout:\n' )
@@ -63,14 +64,21 @@ def discoverPrintOut( discovered_links, guessed_links ):
 		print( '\t- Discovered Links -\n' )
 		for link in discovered_links:
 			print( link + '\n' )
-		print( '\n' )
 
-		print( '\t- Guessed Links -\n' )
+		print( '\n\t- Guessed Links -\n' )
 		for link in guessed_links:
 			print( link + '\n' )
 
 	elif print_input == 'd':
-		print( 'file output is not yet implemented.' )
+		discoveryFile = open( 'discovery_output.txt', 'w+' )
+		discoveryFile.write( 'Discover Printout:\n' )
+		discoveryFile.write( '\t- Discovered Links -\n' )
+		for link in discovered_links:
+			discoveryFile.write( link + '\n' )
+		discoveryFile.write( '\n\t- Guessed Links -\n' )
+		for link in guessed_links:
+			discoveryFile.write( link + '\n' )
+		
 
 	elif print_input == 'b':
 		print( 'file output is not yet implemented. Terminal output:' )
@@ -79,12 +87,21 @@ def discoverPrintOut( discovered_links, guessed_links ):
 
 		print( '\t- Discovered Links -\n' )
 		for link in discovered_links:
-			print( link )
-		print( '\n' )
+			print( link + '\n' )
 
-		print( '\t- Guessed Links -\n' )
+		print( '\n\t- Guessed Links -\n' )
 		for link in guessed_links:
 			print( link + '\n' )
+
+
+		discoveryFile = open( 'discovery_output.txt', 'w+' )
+		discoveryFile.write( 'Discover Printout:\n' )
+		discoveryFile.write( '\t- Discovered Links -\n' )
+		for link in discovered_links:
+			discoveryFile.write( link + '\n' )
+		discoveryFile.write( '\n\t- Guessed Links -\n' )
+		for link in guessed_links:
+			discoveryFile.write( link + '\n' )
 	elif print_input == 'n':
 		pass
 
