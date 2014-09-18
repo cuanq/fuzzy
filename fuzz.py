@@ -9,6 +9,9 @@ import sys
 # Import Beautiful Soup for web scraping
 from bs4 import BeautifulSoup
 
+# Import requests for handling website
+import requests
+
 # Import Discover and Auth for handling input
 import discovery
 

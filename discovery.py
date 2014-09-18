@@ -28,11 +28,11 @@ def discoverLink(page):
 def guessPage(page, commonFile, linksFound, session):
     guessed_pages = []
     common_words = open(commonFile, "r").read().splitlines()
-    common_extent = open("/commonExtensions.txt").read().splitlines()
+    common_extent = open("commonExtensions.txt").read().splitlines()
 
     for word in common_words:
         for extent in common_extent:
-            pageGuess = session.get(page.url + word + "." + extent)
+            pageGuess = session.get(page + word + "." + extent)
 
             # if it exists and isn't in linksFound, add to guessed_pages 
             # check session code 
