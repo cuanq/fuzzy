@@ -18,8 +18,8 @@ def discoverLink(page):
     parsed_url = urlparse(page)
     site = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_url)
 
-    page = requests.get(url)
-    pageData = page.text
+    aPage = requests.get(page)
+    pageData = aPage.text
     pageSoup = BeautifulSoup(pageData)
     for link in pageSoup.find_all('a'):
         if (link.get('href')).startswith(site):
