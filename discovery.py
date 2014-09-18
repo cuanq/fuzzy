@@ -11,6 +11,8 @@ class discovery:
    
    # Fuzzer should keep a list of URLs that it can reach from init page
    # no off-site links
+
+    # !!!! ISSUE: not everything is a full URL but some things are
     def discoverLink(page):
         linksFound = []
 
