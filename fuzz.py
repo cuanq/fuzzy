@@ -3,26 +3,101 @@ File: fuzz.py
 Authors: Zack Downs <zjd2035@gmail.com>, Danielle Gonzalez <dng2551@rit.edu>, Stephan Wlodarczyk <stephanjwlodarczyk@gmail.com>
 """
 # Import sys and parseargs for input reading
-import parseargs
+import argparse
 import sys
 
+# Import Beautiful Soup for web scraping
+from bs4 import BeautifulSoup
+
 # Import Discover and Auth for handling input
-import Discover, Auth
+import discovery
 
-class Fuzz:
+def main():
 	parser = argparse.ArgumentParser( description = 'Fuzzer for website security testing.' )
-	parser.add_argument( 'command', type = string, help = 'Direct the Fuzzer\'s actions to:\n\t\'Discover\'\t- Output a comprehensive, human-readable list of all discovered inputs to the system. Techniques include both crawling and guessing.\n\t\'Test\'\t- Discover all inputs, then attempt a list of exploit vectors on those inputs. Report potential vulnerabilities.' )
-	parser.add_argument( 'url', type = string, help = 'URL where the fuzzer should begin its search.' )
+	parser.add_argument( 'fuzzer-action', nargs = '?', help = 'Direct the Fuzzer\'s actions to:\'discover\' - Output a comprehensive, human-readable list of all discovered inputs to the system. Techniques include both crawling and guessing.\'test\' - Discover all inputs, then attempt a list of exploit vectors on those inputs. Report potential vulnerabilities. This argument is Required.' )
+	parser.add_argument( 'url', nargs = '?', help = 'URL where the fuzzer should begin its search. This argument is Required.' )
 	parser.add_argument( '--custom-auth', dest = 'custom-auth', help = 'Signal that the fuzzer should use hard-coded authentication for a specific application (e.g. dvwa).' )
-	parser.add_argument( '--common-words', dest = 'common-words', help = 'Newline-delimited file of common words to be used in page guessing and input guessing.' )
-	parser.add_argument( '--vectors', dest = 'vectors', help = 'Newline-delimited file of common exploits to vulnerabilities.' )
-	parser.add_argument( '--sensitive', dest = 'sensitive', help = 'Newline-delimited file data that should never be leaked.' )
-	parser.add_argument( '--random', dest = 'random', help = 'When off, try each input to each page systematically.  When on, choose a random page, then a random input field and test all vectors. Default: False.' )
-	parser.add_argument( '--slow', dest = 'slow', help = 'Number of milliseconds considered when a response is considered "slow". Default is 500 milliseconds.' )
-	args = parser.parse_args()
-
+	parser.add_argument( '--common-words', dest = 'common-words', help = 'Newline-delimited file of common words to be used in page guessing and input guessing. This argument is Required.' )
 	
+	args = vars( parser.parse_args() )
+
+	""" Make sure that required arguments are present """
+	if args['fuzzer-action'] == 'discover':
+		if args['url'] == None:
+			print( 'Must specify a url to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
+			sys.exit()
+		"""
+		if args['common-words'] == None:
+			print( 'Must specify a custom-words file to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
+			sys.exit()"""
+	elif args['fuzzer-action'] == 'test':
+		print( 'Test functionality will be available in Release 2. Use \'python fuzz.py -h\' for more help.' )
+		sys.exit()
+	else:
+		print( 'Must specify either \'Discover\' or \'Test\' for the fuzzer action. Use \'python fuzz.py -h\' for more help.' )
+		sys.exit()
+
+
+	""" Handle the given arguments based on the action """
+	# Create lists from discovered links
+	discovered_links	= discovery.discoverLink( args['url'] )
+	guessed_links		= guessPage( args['url'] )
+
+	# Merge the two lists for a full link array
+	all_links			= discovered_links + guessed_links
+
+	if args['fuzzer-action'] == 'discover':
+		discoverPrintOut( discovered_links )
+
+	else: # fuzzer action == 'test' from earlier check
+		pass
+
+
+
+def discoverPrintOut( discovered_links, guessed_links ):
+	print_input = raw_input( 'Discovery completed. Would you like the discovered links printed to:\n\t[d] - Document\n\t[t] - Terminal\n\t[b] - Both document and terminal\n\t[n] - Not Printed\nInput: ' )
+
+	if print_input == 't':
+		print( 'Discover Printout:\n' )
+
+		print( '\t- Discovered Links -\n' )
+		for link in discovered_links:
+			print( link + '\n' )
+		print( '\n' )
+
+		print( '\t- Guessed Links -\n' )
+		for link in guessed_links:
+			print( link + '\n' )
+
+	elif print_input == 'd':
+		print( 'file output is not yet implemented.' )
+
+	elif print_input == 'b':
+		print( 'file output is not yet implemented. Terminal output:' )
+
+		print( 'Discover Printout:\n' )
+
+		print( '\t- Discovered Links -\n' )
+		for link in discovered_links:
+			print( link )
+		print( '\n' )
+
+		print( '\t- Guessed Links -\n' )
+		for link in guessed_links:
+			print( link + '\n' )
+	elif print_input == 'n':
+		pass
+
+	else:
+		print( 'Invalid Input. Closing Fuzzer.' )
+		sys.exit()
+
+	print( 'Fuzzer Discovery completed.' )
 
 
 if __name__ == '__main__':
-	Fuzz()
+	main()
+
+
+
+
