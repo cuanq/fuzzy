@@ -14,10 +14,18 @@ import discovery
 
 def main():
 	parser = argparse.ArgumentParser( description = 'Fuzzer for website security testing.' )
-	parser.add_argument( 'fuzzer-action', nargs = '?', help = 'Direct the Fuzzer\'s actions to:\'discover\' - Output a comprehensive, human-readable list of all discovered inputs to the system. Techniques include both crawling and guessing.\'test\' - Discover all inputs, then attempt a list of exploit vectors on those inputs. Report potential vulnerabilities. This argument is Required.' )
-	parser.add_argument( 'url', nargs = '?', help = 'URL where the fuzzer should begin its search. This argument is Required.' )
-	parser.add_argument( '--custom-auth', dest = 'custom-auth', help = 'Signal that the fuzzer should use hard-coded authentication for a specific application (e.g. dvwa).' )
-	parser.add_argument( '--common-words', dest = 'common-words', help = 'Newline-delimited file of common words to be used in page guessing and input guessing. This argument is Required.' )
+
+	parser.add_argument( 'fuzzer-action', nargs = '?', 
+		help = 'Direct the Fuzzer\'s actions to:\'discover\' - Output a comprehensive, human-readable list of all discovered inputs to the system. Techniques include both crawling and guessing.\'test\' - Discover all inputs, then attempt a list of exploit vectors on those inputs. Report potential vulnerabilities. This argument is Required.' )
+	
+	parser.add_argument( 'url', nargs = '?', 
+		help = 'URL where the fuzzer should begin its search. This argument is Required.' )
+	
+	parser.add_argument( '--custom-auth', dest = 'custom-auth', 
+		help = 'Signal that the fuzzer should use hard-coded authentication for a specific application (e.g. dvwa).' )
+	
+	parser.add_argument( '--common-words', dest = 'common-words', 
+		help = 'Newline-delimited file of common words to be used in page guessing and input guessing. This argument is Required.' )
 	
 	args = vars( parser.parse_args() )
 
@@ -26,10 +34,10 @@ def main():
 		if args['url'] == None:
 			print( 'Must specify a url to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
 			sys.exit()
-		"""
+		
 		if args['common-words'] == None:
-			print( 'Must specify a custom-words file to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
-			sys.exit()"""
+			print( 'Must specify a common-words file to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
+			sys.exit()
 	elif args['fuzzer-action'] == 'test':
 		print( 'Test functionality will be available in Release 2. Use \'python fuzz.py -h\' for more help.' )
 		sys.exit()
