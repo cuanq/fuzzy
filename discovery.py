@@ -1,5 +1,7 @@
+# for getting and parsing web pages 
 import requests
-import sys
+from urlparse import urljoin
+from urlparse import urlparse
 from bs4 import BeautifulSoup
 
 class discovery:
@@ -12,21 +14,22 @@ class discovery:
    # Fuzzer should keep a list of URLs that it can reach from init page
    # no off-site links
 
-    # !!!! ISSUE: not everything is a full URL but some things are
+   
     def discoverLink(page):
         linksFound = []
 
-        aPage = requests.get(page)
-        pageData = aPage.text
+        parsed_url = urlparse(page)
+        site = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_url)
+
+        page = requests.get(url)
+        pageData = page.text
         pageSoup = BeautifulSoup(pageData)
         for link in pageSoup.find_all('a'):
-            linksFound.append(link.get('href'))
+            if (link.get('href')).startswith(site):
+                linksFound.append(link.get('href'))
+            else:
+                linksFound.append(site + link.get('href'))
 
     # Fuzzer should use common word list to discover potenially unlinked pages
     def guessPage():
-        pass
-    # Fuzzer should attempt to discover every possible input into system
-    # Includes Parse URLs, Form parameters, & Cookies 
-    def discoverInput():
-
         pass
