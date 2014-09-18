@@ -25,5 +25,17 @@ def discoverLink(page):
     return linksFound
 
 # Fuzzer should use common word list to discover potenially unlinked pages
-def guessPage():
-    pass
+def guessPage(page, commonFile, linksFound, session):
+    guessed_pages = []
+    common_words = open(commonFile, "r").read().splitlines()
+    #common_extent = open().read().splitlines()
+
+    for word in common_words:
+        for extent in common_extent:
+            pageGuess = session.get(page.url + word + "." + extent)
+
+            # if it exists and isn't in linksFound, add to guessed_pages 
+    
+    return guessed_pages
+
+
