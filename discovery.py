@@ -4,14 +4,9 @@ from urlparse import urljoin
 from urlparse import urlparse
 from bs4 import BeautifulSoup
 
-# Fuzzer must crawl and guess pages
-# Includes Link discovery & Page guessing
-def discoverPage(page):
-    pass
 
 # Fuzzer should keep a list of URLs that it can reach from init page
 # no off-site links
-
 def discoverLink(page):
     linksFound = []
 
