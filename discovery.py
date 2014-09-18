@@ -13,8 +13,7 @@ class discovery:
    
    # Fuzzer should keep a list of URLs that it can reach from init page
    # no off-site links
-
-   
+ 
     def discoverLink(page):
         linksFound = []
 
@@ -29,6 +28,8 @@ class discovery:
                 linksFound.append(link.get('href'))
             else:
                 linksFound.append(site + link.get('href'))
+
+        return linksFound
 
     # Fuzzer should use common word list to discover potenially unlinked pages
     def guessPage():
