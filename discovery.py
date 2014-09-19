@@ -1,7 +1,9 @@
 # for getting and parsing web pages 
 import requests
-from urlparse import urljoin
-from urlparse import urlparse
+# from urlparse import urljoin (these imports 
+# from urlparse import urlparse
+from urllib.parse import urljoin
+from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
 
