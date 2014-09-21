@@ -46,18 +46,27 @@ def guessPage(page, commonFile, linksFound):
 
 def parseURL(page):
 
-    #get the links 
+    # empty list for any inputs found
+    inputs_found = []
+    
+    # get the links 
     pageLinks = discoverLink(page)
 
+    #get the base site, as done in discoverLink
+
+    parsed_url = urlparse(page)
+    baseSite = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_url)
     # get the guessed links? 
-#    guessLinks = guessPage(page, commonFile, pageLinks)
+    # guessLinks = guessPage(page, commonFile, pageLinks)
 
     for link in pageLinks:
         '''
-        1. parse out the domain ('site'), such as done in discoverLink
-        2. check remaining part of link string for inputs - (urlparse?)
-        3. put these inputs in a list 
+        if link.startswith(baseSite):
+            1. check remaining part of link string for inputs - (urlparse's urlsplit()?)
+            2. put these inputs in a list 
         '''
+
+    return inputs_found
 
 
 
