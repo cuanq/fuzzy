@@ -51,9 +51,8 @@ def main():
 
 	""" Handle the given arguments based on the action """
 	# Create lists from discovered links
-	session = requests.Session()
 	discovered_links	= discovery.discoverLink( args['url'] )
-	guessed_links		= discovery.guessPage( args['url'], args['common-words'], discovered_links, session )
+	guessed_links		= discovery.guessPage( args['url'], args['common-words'], discovered_links )
 
 	# Merge the two lists for a full link array
 	all_links			= discovered_links + guessed_links
