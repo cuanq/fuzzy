@@ -1,9 +1,9 @@
 # for getting and parsing web pages 
 import requests
-# from urlparse import urljoin (these imports 
-# from urlparse import urlparse
-from urllib.parse import urljoin
-from urllib.parse import urlparse
+from urlparse import urljoin 
+from urlparse import urlparse
+# from urllib.parse import urljoin
+# from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
 
@@ -27,14 +27,14 @@ def discoverLink(page):
     return linksFound
 
 # Fuzzer should use common word list to discover potenially unlinked pages
-def guessPage(page, commonFile, linksFound, session):
+def guessPage(page, commonFile, linksFound):
     guessed_pages = []
     common_words = open(commonFile, "r").read().splitlines()
     common_extent = open("commonExtensions.txt").read().splitlines()
 
     for word in common_words:
         for extent in common_extent:
-            pageGuess = session.get(page + word + "." + extent)
+            #pageGuess = session.get(page + word + "." + extent)
 
             # if it exists and isn't in linksFound, add to guessed_pages 
             # check session code 
