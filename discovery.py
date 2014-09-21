@@ -1,11 +1,11 @@
 # for getting and parsing web pages 
 import requests
+import custom_auth
 from urlparse import urljoin 
 from urlparse import urlparse
-# from urllib.parse import urljoin
-# from urllib.parse import urlparse
+#from urllib.parse import urljoin
+#from urllib.parse import urlparse
 from bs4 import BeautifulSoup
-
 
 # Fuzzer should keep a list of URLs that it can reach from init page
 # no off-site links
@@ -26,7 +26,7 @@ def discoverLink(page):
 
     return linksFound
 
-# Fuzzer should use common word list to discover potenially unlinked pages
+# Fuzzer should use common word list to discover potentially unlinked pages
 def guessPage(page, commonFile, linksFound):
     guessed_pages = []
     common_words = open(commonFile, "r").read().splitlines()
