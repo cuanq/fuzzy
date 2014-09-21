@@ -1,16 +1,16 @@
-FUZZER Project
-SWEN 331 Security 
+# FUZZER Project
+# SWEN 331 Security 
 
 -------------
 
-Contributors:
+# Contributors:
 
 Zack Downs
 Danielle Gonzalez
 Stephan Wlo
 
 -------------
-Installation & Setup
+# Installation & Setup
 
 1. Download all files
 * or clone the Github repository
@@ -21,12 +21,12 @@ Installation & Setup
 
 -------------
 
-Usage 
+# Usage 
 
-Discover 
+## Discover 
 
-    No Authorization
+    ### No Authorization
 
-    Authorization
+    ### Authorization
 
 

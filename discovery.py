@@ -44,4 +44,20 @@ def guessPage(page, commonFile, linksFound):
     
     return guessed_pages
 
+def parseURL(page):
+
+    #get the links 
+    pageLinks = discoverLink(page)
+
+    # get the guessed links? 
+#    guessLinks = guessPage(page, commonFile, pageLinks)
+
+    for link in pageLinks:
+        '''
+        1. parse out the domain ('site'), such as done in discoverLink
+        2. check remaining part of link string for inputs - (urlparse?)
+        3. put these inputs in a list 
+        '''
+
+
 
