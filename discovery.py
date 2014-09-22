@@ -49,7 +49,5 @@ def parseURL(all_Links):
 		this_query = parsed_link.query
 		print(this_query)
 		#inputs_found.append(this_query) # put these inputs in a list 
-
-
-return inputs_found
+	return inputs_found
 
