@@ -82,7 +82,7 @@ def main():
 		input_list = discovery.parseURL(all_links)
 		inputPrintOut( input_list )
 
-		if discoverCookie( page, session, auth ) != None:
+		if discovery.discoverCookie(session) == False:
 			print( '\nWe have cookies too!' )
 
 	else: # fuzzer action == 'test' from earlier check

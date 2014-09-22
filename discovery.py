@@ -50,3 +50,20 @@ def parseURL(all_Links):
 			inputs_found.append(this_query) # put these inputs in a list 
 	return inputs_found
 
+def discoverCookie(session):
+	#if 'htttp://127.0.0.1/dvwa/login.php' in page.url and 'logout.php' not in url and auth == #'dvwa': page, session = dvwa_relogin(session, page.url)
+	cookies = session.cookies
+	
+	#empty list for any cookies found
+	cookie_jar = []
+	isCookieJarEmpty = True;
+	
+	#find some cookies; if found, store in jar
+	for cookie in cookies:
+		i_has_cookie = {"name": cookie.name, "value": cookie.value}
+		cookie_jar.append(i_has_cookie)
+	
+	if len(cookie_jar) > 0:
+		isCookieJarEmpty = False;
+	
+	return isCookieJarEmpty
