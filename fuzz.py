@@ -86,7 +86,7 @@ def main():
 
 
 def discoverPrintOut( discovered_links, guessed_links ):
-	print_input = input( 'Discovery completed. Would you like the discovered links printed to:\n\t[d] - Document\n\t[t] - Terminal\n\t[b] - Both document and terminal\n\t[n] - Not Printed\nPrinting to document will overwrite previous printings.\nInput: ' )
+	print_input = raw_input( 'Discovery completed. Would you like the discovered links printed to:\n\t[d] - Document\n\t[t] - Terminal\n\t[b] - Both document and terminal\n\t[n] - Not Printed\nPrinting to document will overwrite previous printings.\nInput: ' )
 
 	if print_input == 't':
 		print( 'Discover Printout:\n' )

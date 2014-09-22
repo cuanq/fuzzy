@@ -1,10 +1,10 @@
 # for getting and parsing web pages 
 import requests
 import custom_auth
-#from urlparse import urljoin 
-#from urlparse import urlparse
-from urllib.parse import urljoin
-from urllib.parse import urlparse
+from urlparse import urljoin 
+from urlparse import urlparse
+#from urllib.parse import urljoin
+#from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
 # Fuzzer should keep a list of URLs that it can reach from init page

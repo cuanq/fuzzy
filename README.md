@@ -21,7 +21,7 @@
 2. Type the command:
 	
     ``` python
-    python fuzz.py discover [Link] —-common-words=[CommonWords] [Options] 
+    python fuzz.py discover [Link] [Options] --common-words=[CommonWords]
     ```
 
 	[Link] 	= link you want to use the fuzzier on (ex. http://www.pythonforbeginners.com)
