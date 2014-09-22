@@ -1,16 +1,18 @@
-# FUZZER Project
-# SWEN 331 Security 
+FUZZER 
+===========
+SWEN 331
+===========
 
--------------
 
-# Contributors:
+Contributors:
+=============
 
 Zack Downs
 Danielle Gonzalez
 Stephan Wlo
 
--------------
-# Installation & Setup
+Installation & Setup
+=====================
 
 1. Download all files
 * or clone the Github repository
@@ -19,11 +21,12 @@ Stephan Wlo
     * BeautifulSoup (pip install beautifulsoup4)
     * Requests (pip install requests)
 
--------------
 
-# Usage 
+Usage
+====== 
 
-## Discover
+Discover
+========
 
 1. Navigate your terminal/command prompt to the fuzzy directory
 2. Type the command:
@@ -34,8 +37,10 @@ Stephan Wlo
 	*Options* 	= —-custom-auth=dvwa or —-custom-auth=bodgeit to use our hard-coded authentication for the related website
 	
 
-    ### No Authorization
+No Authorization
+-----------------
 
-    ### Authorization
+Authorization
+--------------
 
 
