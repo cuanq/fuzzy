@@ -46,7 +46,7 @@ def parseURL(all_Links):
 		parsed_link = urlparse(link)	# this lets us pull out the query from individual links
 		this_query = parsed_link.query
 		if this_query != '':
-			print(this_query)
-			#inputs_found.append(this_query) # put these inputs in a list 
+			#print(this_query)
+			inputs_found.append(this_query) # put these inputs in a list 
 	return inputs_found
 
