@@ -44,19 +44,25 @@ def main():
 			sys.exit()
 			
 		if args['custom-auth'] == 'dvwa':
-			"""payload = {
-				'username': custom_auth[args['custom-auth']]['username'],
-				'password': custom_auth[args['custom-auth']]['password'],
-				'Login': 'Login'
-			}"""
+			try:
+				username = custom_auth[args['custom-auth']]["username"]
+				password = custom_auth[args['custom-auth']]["password"]
+			except:
+				parser.error("error")
+		
+			payload = {
+				"username": custom_auth[args['custom-auth']]["username"],
+				"password": custom_auth[args['custom-auth']]["password"],
+				"Login": "Login"
+			}
 			
-			session = requests.Session()
-			"""session.post(custom_auth[args['custom-auth']]['login_url'], data=payload)"""
+			"""session = requests.Session()
+			session.post(custom_auth[args['custom-auth']]['login_url'], data=payload)
 			page = session.get(args['url'] + "/" + args['custom-auth'])
-			"""ADD COOKIES HERE"""
+			ADD COOKIES HERE
 		else:
 			session = requests.Session()
-			page = session.get(args['url'])
+			page = session.get(args['url'])"""
 		
 	elif args['fuzzer-action'] == 'test':
 		print( 'Test functionality will be available in Release 2. Use \'python fuzz.py -h\' for more help.' )
