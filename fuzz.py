@@ -47,16 +47,18 @@ def main():
 			payload = {
 				"username": custom_auth[args['custom-auth']]["username"],
 				"password": custom_auth[args['custom-auth']]["password"],
-				"Login": "Login"
-			}			
-			print('\n###0###\n')
+				"login": "login"
+			}
 			session = requests.Session()
 			session.post(custom_auth[args['custom-auth']]["login_url"], data=payload)			
 			page = session.get(args['url'] + "/" + args['custom-auth'])
-		else:
-			print('\n###1###\n')
+			
+		elif args['custom-auth'] == 'bodgeit':
 			session = requests.Session()
-			print('\n###2###\n')
+			page = session.get(custom_auth[args['custom-auth']]["login_url"])
+			
+		else:
+			session = requests.Session()
 			page = session.get(args['url'])
 		
 	elif args['fuzzer-action'] == 'test':
@@ -64,29 +66,25 @@ def main():
 		sys.exit()
 	else:
 		print( 'Must specify either \'Discover\' or \'Test\' for the fuzzer action. Use \'python fuzz.py -h\' for more help.' )
-		sys.exit()	
+		sys.exit()
 		
-
-
-
 	""" Handle the given arguments based on the action """
 	# Create lists from discovered links
 	discovered_links	= discovery.discoverLink( args['url'] )
 	guessed_links		= discovery.guessPage( page, args['common-words'], discovered_links, session)
 
 	# Merge the two lists for a full link array
-	all_links			= discovered_links + guessed_links
+	all_links = discovered_links + guessed_links
 
 	if args['fuzzer-action'] == 'discover':
 		discoverPrintOut( discovered_links, guessed_links )
+		parseURL(all_links)
 
 	else: # fuzzer action == 'test' from earlier check
 		pass
 
-
-
 def discoverPrintOut( discovered_links, guessed_links ):
-	print_input = raw_input( 'Discovery completed. Would you like the discovered links printed to:\n\t[d] - Document\n\t[t] - Terminal\n\t[b] - Both document and terminal\n\t[n] - Not Printed\nPrinting to document will overwrite previous printings.\nInput: ' )
+	print_input = input( 'Discovery completed. Would you like the discovered links printed to:\n\t[d] - Document\n\t[t] - Terminal\n\t[b] - Both document and terminal\n\t[n] - Not Printed\nPrinting to document will overwrite previous printings.\nInput: ' )
 
 	if print_input == 't':
 		print( 'Discover Printout:\n' )
@@ -97,7 +95,6 @@ def discoverPrintOut( discovered_links, guessed_links ):
 				print(link + '\n')
 			except:
 				print('LINK REMOVED: Improper characterization of text.\n')
-				#link.encode('utf-8')
 		print( '\n\t- Guessed Links -\n' )
 		for link in guessed_links:
 			print( link + '\n' )
