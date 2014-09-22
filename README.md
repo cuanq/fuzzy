@@ -1,4 +1,11 @@
 # Python Web Fuzzer
+### Project Specification
+http://www.se.rit.edu/~swen-331/projects/fuzzer/
+
+## Contributors
+* Danielle Gonzalez 
+* Zack Downs
+* Stephan Wlodarczyk
 
 ## Installation & Setup
 

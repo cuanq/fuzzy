@@ -55,11 +55,9 @@ def parseURL(page):
 	# guessLinks = guessPage(page, commonFile, pageLinks)
 
 	for link in pageLinks:
-		'''
 		if link.startswith(baseSite):
-			1. check remaining part of link string for inputs - (urlparse's urlsplit()?)
-			2. put these inputs in a list 
-		'''
+			parsed_link = urlparse(link)	#this lets us pull out the query from individual links
+			inputs_found.append(parsed_link.query) #put these inputs in a list 
 
 	return inputs_found
 
