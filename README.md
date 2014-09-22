@@ -1,7 +1,7 @@
 # Python Web Fuzzer
 
-Installation & Setup
-=====================
+## Installation & Setup
+
 
 1. Download all files
 * or clone the Github repository
@@ -11,25 +11,27 @@ Installation & Setup
     * Requests (pip install requests)
 
 
-Usage
-====== 
+## Usage
 
-Discover
-========
+
+## Discover
+
 
 1. Navigate your terminal/command prompt to the fuzzy directory
 2. Type the command:
-	‘python fuzz.py discover *Link* —-common-words=*CommonWords* *Options*
+	``` python
+    python fuzz.py discover [Link] —-common-words=[CommonWords] [Options] 
+    ```
 
-	*Link* 		= link you want to use the fuzzier on (ex. http://www.pythonforbeginners.com)
-	*CommonWords* 	= Newline-delimited file of common words to be used in page guessing and input guessing
-	*Options* 	= —-custom-auth=dvwa or —-custom-auth=bodgeit to use our hard-coded authentication for the related website
+	[Link] 	= link you want to use the fuzzier on (ex. http://www.pythonforbeginners.com)
+	[CommonWords] 	= Newline-delimited file of common words to be used in page guessing and input guessing
+	[Options] 	= —-custom-auth=dvwa or —-custom-auth=bodgeit to use our hard-coded authentication for the related website
 	
 
-No Authorization
------------------
+### No Authorization
 
-Authorization
---------------
+
+### Authorization
+
 
 
