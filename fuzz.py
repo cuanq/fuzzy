@@ -5,7 +5,7 @@ Authors: Zack Downs <zjd2035@gmail.com>, Danielle Gonzalez <dng2551@rit.edu>, St
 # Import sys and parseargs for input reading
 import argparse
 import sys
-import custom_auth
+from custom_auth import *
 
 # Import Beautiful Soup for web scraping
 from bs4 import BeautifulSoup
@@ -44,25 +44,21 @@ def main():
 			sys.exit()
 			
 		if args['custom-auth'] == 'dvwa':
-			try:
-				username = custom_auth[args['custom-auth']]["username"]
-				password = custom_auth[args['custom-auth']]["password"]
-			except:
-				parser.error("error")
-		
 			payload = {
 				"username": custom_auth[args['custom-auth']]["username"],
 				"password": custom_auth[args['custom-auth']]["password"],
 				"Login": "Login"
 			}
 			
-			"""session = requests.Session()
-			session.post(custom_auth[args['custom-auth']]['login_url'], data=payload)
-			page = session.get(args['url'] + "/" + args['custom-auth'])
-			ADD COOKIES HERE
-		else:
 			session = requests.Session()
-			page = session.get(args['url'])"""
+			session.post(custom_auth[args['custom-auth']]["login_url"], data=payload)
+		else:
+			pass
+			'''
+			page = session.get(args['url'] + "/" + args['custom-auth'])
+			else:
+			session = requests.Session()
+			page = session.get(args['url'])'''
 		
 	elif args['fuzzer-action'] == 'test':
 		print( 'Test functionality will be available in Release 2. Use \'python fuzz.py -h\' for more help.' )
@@ -70,6 +66,8 @@ def main():
 	else:
 		print( 'Must specify either \'Discover\' or \'Test\' for the fuzzer action. Use \'python fuzz.py -h\' for more help.' )
 		sys.exit()	
+		
+
 
 
 	""" Handle the given arguments based on the action """
