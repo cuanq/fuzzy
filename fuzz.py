@@ -48,17 +48,16 @@ def main():
 				"username": custom_auth[args['custom-auth']]["username"],
 				"password": custom_auth[args['custom-auth']]["password"],
 				"Login": "Login"
-			}
-			
+			}			
+			print('\n###0###\n')
 			session = requests.Session()
-			session.post(custom_auth[args['custom-auth']]["login_url"], data=payload)
-		else:
-			pass
-			'''
+			session.post(custom_auth[args['custom-auth']]["login_url"], data=payload)			
 			page = session.get(args['url'] + "/" + args['custom-auth'])
-			else:
+		else:
+			print('\n###1###\n')
 			session = requests.Session()
-			page = session.get(args['url'])'''
+			print('\n###2###\n')
+			page = session.get(args['url'])
 		
 	elif args['fuzzer-action'] == 'test':
 		print( 'Test functionality will be available in Release 2. Use \'python fuzz.py -h\' for more help.' )
@@ -73,7 +72,7 @@ def main():
 	""" Handle the given arguments based on the action """
 	# Create lists from discovered links
 	discovered_links	= discovery.discoverLink( args['url'] )
-	guessed_links		= discovery.guessPage( args['url'], args['common-words'], discovered_links )
+	guessed_links		= discovery.guessPage( page, args['common-words'], discovered_links, session)
 
 	# Merge the two lists for a full link array
 	all_links			= discovered_links + guessed_links
@@ -87,15 +86,18 @@ def main():
 
 
 def discoverPrintOut( discovered_links, guessed_links ):
-	print_input = raw_input( 'Discovery completed. Would you like the discovered links printed to:\n\t[d] - Document\n\t[t] - Terminal\n\t[b] - Both document and terminal\n\t[n] - Not Printed\nPrinting to document will overwrite previous printings.\nInput: ' )
+	print_input = input( 'Discovery completed. Would you like the discovered links printed to:\n\t[d] - Document\n\t[t] - Terminal\n\t[b] - Both document and terminal\n\t[n] - Not Printed\nPrinting to document will overwrite previous printings.\nInput: ' )
 
 	if print_input == 't':
 		print( 'Discover Printout:\n' )
 
 		print( '\t- Discovered Links -\n' )
 		for link in discovered_links:
-			print( link + '\n' )
-
+			try:
+				print(link + '\n')
+			except:
+				print('LINK REMOVED: Improper characterization of text.\n')
+				#link.encode('utf-8')
 		print( '\n\t- Guessed Links -\n' )
 		for link in guessed_links:
 			print( link + '\n' )
