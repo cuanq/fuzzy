@@ -75,10 +75,10 @@ def main():
 
 	# Merge the two lists for a full link array
 	all_links = discovered_links + guessed_links
-
+	input_list = []
 	if args['fuzzer-action'] == 'discover':
 		discoverPrintOut( discovered_links, guessed_links )
-		parseURL(all_links)
+		input_list = discovery.parseURL(all_links)
 
 	else: # fuzzer action == 'test' from earlier check
 		pass

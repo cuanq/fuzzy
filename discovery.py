@@ -1,10 +1,8 @@
 # for getting and parsing web pages 
 import requests
 import custom_auth
-from urlparse import urljoin 
-from urlparse import urlparse
-#from urllib.parse import urljoin
-#from urllib.parse import urlparse
+from urllib.parse import urljoin
+from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
 # Fuzzer should keep a list of URLs that it can reach from init page
@@ -47,7 +45,8 @@ def parseURL(all_Links):
 	for link in all_Links:
 		parsed_link = urlparse(link)	# this lets us pull out the query from individual links
 		this_query = parsed_link.query
-		print(this_query)
-		#inputs_found.append(this_query) # put these inputs in a list 
+		if this_query != ''
+			print(this_query)
+			#inputs_found.append(this_query) # put these inputs in a list 
 	return inputs_found
 
