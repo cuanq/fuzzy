@@ -31,7 +31,6 @@ def guessPage(page, commonFile, linksFound, session):
 	guessed_pages = []
 	common_words = open(commonFile, "r+").read().splitlines()
 	common_extent = open("commonExtensions.txt").read().splitlines()
-	print('\n###3###\n')
 	for word in common_words:
 		for extent in common_extent:
 			pageGuess = session.get(page.url + word + "." + extent)
@@ -39,27 +38,18 @@ def guessPage(page, commonFile, linksFound, session):
 				guessed_pages.append(pageGuess)
 	return guessed_pages
 
-def parseURL(page):
+def parseURL(all_Links):
 
 	# empty list for any inputs found
 	inputs_found = []
 
-	# get the links 
-	pageLinks = discoverLink(page)
 
-	#get the base site, as done in discoverLink
-
-	parsed_url = urlparse(page)
-	baseSite = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_url)
-	# get the guessed links? 
-	# guessLinks = guessPage(page, commonFile, pageLinks)
-
-	for link in pageLinks:
-		if link.startswith(baseSite):
-			parsed_link = urlparse(link)	#this lets us pull out the query from individual links
-			inputs_found.append(parsed_link.query) #put these inputs in a list 
-
-	return inputs_found
+	for link in all_Links:
+		parsed_link = urlparse(link)	# this lets us pull out the query from individual links
+		this_query = parsed_link.query
+		print(this_query)
+		#inputs_found.append(this_query) # put these inputs in a list 
 
 
+return inputs_found
 
