@@ -85,6 +85,13 @@ def main():
 		if discovery.discoverCookie(session) == False:
 			print( '\nWe have cookies too!' )
 
+		form_params = list()
+		for link in all_links:
+			""" Create page from link variable """
+			form_params.append(discovery.formParams(link))
+
+		paramPrintOut( form_params )
+
 	else: # fuzzer action == 'test' from earlier check
 		pass
 
@@ -193,11 +200,19 @@ def inputPrintOut( input_list ):
 
 		print( 'Printed to Terminal and inputs_output.txt. ' )
 
+	elif print_input == 'n':
+		pass
+
 	else:
 		print( 'Invalid Input. Closing Fuzzer.' )
 		sys.exit()
 
 	print( 'Fuzzer Input Parsing completed.\n' )
+
+def paramPrintOut( form_params ):
+	""" Clean up this printout to be similar to discovery and input print outs."""
+	for param in form_params:
+		print( param['type'] + ' with name:' + param['name'] + '\n' )
 
 
 if __name__ == '__main__':

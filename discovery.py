@@ -67,3 +67,28 @@ def discoverCookie(session):
 		isCookieJarEmpty = False;
 	
 	return isCookieJarEmpty
+
+def formParams(page):
+	aPage = requests.get(page)
+	pageData = aPage.text
+	pageSoup = BeautifulSoup(pageData)
+
+	form_params = list()
+
+	for element in pageSoup.find_all('input'):
+		if element.has_key('type') and element.has_key('name'):
+			formParam = { 'type':element['type'], 'name':element['name'] }
+			form_params.append( formParam )
+
+	return form_params
+
+
+
+
+
+
+
+
+
+
+
