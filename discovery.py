@@ -16,11 +16,16 @@ def discoverLink(page):
 	aPage = requests.get(page)
 	pageData = aPage.text
 	pageSoup = BeautifulSoup(pageData)
+	"""for link in pageSoup.find_all('a'):
+		linksFound.append(link.get('href'))"""
 	for link in pageSoup.find_all('a'):
 		if (link.get('href')).startswith(site):
 			linksFound.append(link.get('href'))
 		else:
-			linksFound.append(site + link.get('href'))
+			if (link.get('href').startswith('http://')):
+				pass
+			else:
+				linksFound.append(site + '/' + link.get('href'))
 
 	return linksFound
 
@@ -33,7 +38,7 @@ def guessPage(page, commonFile, linksFound, session):
 		for extent in common_extent:
 			pageGuess = session.get(page.url + word + "." + extent)
 			if pageGuess.status_code < 300 and pageGuess.url not in linksFound:
-				guessed_pages.append(pageGuess)
+				guessed_pages.append(pageGuess.url)
 	return guessed_pages
 
 def parseURL(all_Links):
@@ -69,14 +74,13 @@ def discoverCookie(session):
 	return isCookieJarEmpty
 
 def formParams(page):
-	aPage = requests.get(page)
-	pageData = aPage.text
-	pageSoup = BeautifulSoup(pageData)
+	print('\n5\n')
+	pageSoup = BeautifulSoup(page.content)
 
 	form_params = list()
 
 	for element in pageSoup.find_all('input'):
-		if element.has_key('type') and element.has_key('name'):
+		if element.has_attr('type') and element.has_attr('name'):
 			formParam = { 'type':element['type'], 'name':element['name'] }
 			form_params.append( formParam )
 
