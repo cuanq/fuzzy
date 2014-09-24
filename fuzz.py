@@ -77,18 +77,12 @@ def main():
 		if discovery.discoverCookie(session) != False:
 			print( '\nWe have cookies too!' )
 
-		print('\n1\n')
-
 		form_params = list()
 		for link in all_links:
 			""" Create page from link variable """
-			print('\n2\n')
 			session = requests.Session()
-			print('\n3\n')
 			this_page = session.get(link)
-			print('\n4\n')
 			form_params.append(discovery.formParams(this_page))
-			print('\n6\n')
 
 		paramPrintOut( form_params )
 		
@@ -216,7 +210,12 @@ def inputPrintOut( input_list ):
 
 def paramPrintOut( form_params ):
 	""" Clean up this printout to be similar to discovery and input print outs."""
-	print( form_params )
+	for param in form_params:
+		this_type = param[0]['type']
+		this_name = param[0]['name']
+		print( this_type )
+		print( this_name )
+		print( '\n' )
 		
 
 

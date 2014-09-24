@@ -74,15 +74,15 @@ def discoverCookie(session):
 	return isCookieJarEmpty
 
 def formParams(page):
-	print('\n5\n')
 	pageSoup = BeautifulSoup(page.content)
 
 	form_params = list()
 
 	for element in pageSoup.find_all('input'):
 		if element.has_attr('type') and element.has_attr('name'):
-			formParam = { 'type':element['type'], 'name':element['name'] }
-			form_params.append( formParam )
+			if element['type'] != 'hidden':
+				formParam = { 'type':element['type'], 'name':element['name'] }
+				form_params.append( formParam )
 
 	return form_params
 
