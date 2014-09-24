@@ -69,12 +69,12 @@ def main():
 		# Merge the two lists for a full link array
 		all_links = discovered_links + guessed_links
 		input_list = []
-		discoverPrintOut( discovered_links, guessed_links )
+		print_input = discoverPrintOut( discovered_links, guessed_links )
 
 		input_list = discovery.parseURL(all_links)
-		inputPrintOut( input_list )
+		inputPrintOut( input_list, print_input )
 
-		if discovery.discoverCookie(session) != False:
+		if discovery.discoverCookie(session) == False:
 			print( '\nWe have cookies too!' )
 
 		form_params = list()
@@ -84,7 +84,7 @@ def main():
 			this_page = session.get(link)
 			form_params.append(discovery.formParams(this_page))
 
-		paramPrintOut( form_params )
+		paramPrintOut( form_params, print_input )
 		
 	elif args['fuzzer-action'] == 'test':
 		print( 'Test functionality will be available in Release 2. Use \'python fuzz.py -h\' for more help.' )
@@ -95,7 +95,7 @@ def main():
 		
 
 def discoverPrintOut( discovered_links, guessed_links ):
-	print_input = input( 'Discovery completed. Would you like the discovered links printed to:\n\t[d] - Document\n\t[t] - Terminal\n\t[b] - Both document and terminal\n\t[n] - Not Printed\nPrinting to discovery document will overwrite previous printings.\nInput: ' )
+	print_input = input( 'Discovery completed.\n\nWould you like the results of the Fuzzing printed to:\n\t[d] - Document\n\t[t] - Terminal\n\t[b] - Both document and terminal\n\t[n] - Not Printed\nPrinting to discovery document will overwrite previous printings.\nInput: ' )
 
 	if print_input == 't':
 		print( 'Discover Printout:\n' )
@@ -110,7 +110,7 @@ def discoverPrintOut( discovered_links, guessed_links ):
 		for link in guessed_links:
 			print( link + '\n' )
 
-		print( 'Printed to Terminal. ' )
+		print( 'Discovery Printed to Terminal. ' )
 
 	elif print_input == 'd':
 		discoveryFile = open( 'discovery_output.txt', 'w+' )
@@ -122,7 +122,7 @@ def discoverPrintOut( discovered_links, guessed_links ):
 		for link in guessed_links:
 			discoveryFile.write( link + '\n' )
 
-		print( 'Printed to discovery_output.txt. ' )
+		print( 'Discovery Printed to discovery_output.txt. ' )
 
 	elif print_input == 'b':
 		print( 'Discover Printout:\n' )
@@ -145,21 +145,20 @@ def discoverPrintOut( discovered_links, guessed_links ):
 		for link in guessed_links:
 			discoveryFile.write( link + '\n' )
 
-		print( 'Printed to both Terminal and discovery_output.txt. ' )
+		print( 'Discovery Printed to both Terminal and discovery_output.txt. ' )
 
 	elif print_input == 'n':
-		pass
+		print( 'Did not print discovery.\n' )
 
 	else:
 		print( 'Invalid Input. Closing Fuzzer.' )
 		sys.exit()
 
 	print( 'Fuzzer Discovery completed.\n' )
+	return print_input
 
 
-def inputPrintOut( input_list ):
-	print_input = input( 'Input Parsing completed. Would you like the discovered inputs printed to:\n\t[d] - Document\n\t[t] - Terminal\n\t[b] - Both document and terminal\n\t[n] - Not Printed\nPrinting to input document will overwrite previous printings.\nInput: ' )
-
+def inputPrintOut( input_list, print_input ):
 	if print_input == 't':
 		print( 'Input Parsing Printout:\n' )
 
@@ -170,16 +169,16 @@ def inputPrintOut( input_list ):
 			except:
 				print('INPUT REMOVED: Improper characterization of text.\n')
 
-		print( 'Printed to Terminal. ' )
+		print( 'Input Printed to Terminal. ' )
 
 	elif print_input == 'd':
 		inputsFile = open( 'inputs_output.txt', 'w+' )
 		inputsFile.write( 'Input Parsing Printout:\n' )
-		discoveryFile.write( '\t- Input -\n' )
+		inputsFile.write( '\t- Input -\n' )
 		for this_input in input_list:
 			inputsFile.write( this_input + '\n' )
 
-		print( 'Printed to inputs_output.txt. ' )
+		print( 'Input Printed to inputs_output.txt. ' )
 
 	elif print_input == 'b':
 		print( 'Input Parsing Printout:\n' )
@@ -197,27 +196,56 @@ def inputPrintOut( input_list ):
 		for this_input in input_list:
 			inputsFile.write( this_input + '\n' )
 
-		print( 'Printed to Terminal and inputs_output.txt. ' )
-
-	elif print_input == 'n':
-		pass
+		print( 'Input Printed to Terminal and inputs_output.txt. ' )
 
 	else:
-		print( 'Invalid Input. Closing Fuzzer.' )
-		sys.exit()
+		print( 'Did not print Input.\n' )
 
 	print( 'Fuzzer Input Parsing completed.\n' )
 
-def paramPrintOut( form_params ):
-	""" Clean up this printout to be similar to discovery and input print outs."""
-	for param in form_params:
-		this_type = param[0]['type']
-		this_name = param[0]['name']
-		print( this_type )
-		print( this_name )
-		print( '\n' )
-		
+def paramPrintOut( form_params, print_input ):
+	if print_input == 't':
+		print( 'Form Param Printout:\n' )
+		print( '\t- Form Params -\n' )
+		for param in form_params:
+			this_type = param[0]['type']
+			this_name = param[0]['name']
+			print( 'Input Type: ' + this_type + ', Input Name: ' + this_name + '\n' )
+		print( 'Form Params printed to Terminal.' )
 
+	elif print_input == 'd':
+		paramsFile = open( 'params_output.txt', 'w+' )
+		paramsFile.write( 'Form Param Printout:\n' )
+		paramsFile.write( '\t- Form Params -\n' )
+		for param in form_params:
+			this_type = param[0]['type']
+			this_name = param[0]['name']
+			paramsFile.write( 'Input Type: ' + this_type + ', Input Name: ' + this_name + '\n' )
+
+		print( 'Form Params printed to params_output.txt' )
+
+	elif print_input == 'b':
+		print( 'Form Param Printout:\n' )
+		print( '\t- Form Params -\n' )
+		for param in form_params:
+			this_type = param[0]['type']
+			this_name = param[0]['name']
+			print( 'Input Type: ' + this_type + ', Input Name: ' + this_name + '\n' )
+
+		paramsFile = open( 'params_output.txt', 'w+' )
+		paramsFile.write( 'Form Param Printout:\n' )
+		paramsFile.write( '\t- Form Params -\n' )
+		for param in form_params:
+			this_type = param[0]['type']
+			this_name = param[0]['name']
+			paramsFile.write( 'Input Type: ' + this_type + ', Input Name: ' + this_name + '\n' )
+
+		print( 'Form Params Printed to Terminal and params_output.txt. ' )
+
+	else:
+		print( 'Did not print Form Params.' )
+
+	print( 'Fuzzer Form Params completed.' )
 
 if __name__ == '__main__':
 	main()
