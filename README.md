@@ -68,8 +68,11 @@ These vectors were obtained from https://www.owasp.org/index.php/OWASP_Testing_G
     python fuzz.py test [Link] [Options] --sensitive=[Sensitive] --vectors=[Vectors]
     ```
     [Link] = link you want to use the fuzzer on
+
     [Sensitive] = Newline-delimited file data that should never be leaked. It's assumed that this data is in the application's database (e.g. test data), but is not reported in any response. Required.
+
     [Vectors] = Newline-delimited file of common exploits to vulnerabilities. Required.
+    
     [Options] 
         1. --random=[true|false] When off, try each input to each page systematically.  When on, choose a random page, then a random input field and test all vectors. Default: false.
         2. --slow=500 Number of milliseconds considered when a response is considered "slow". Default is 500 milliseconds
