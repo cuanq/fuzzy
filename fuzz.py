@@ -45,16 +45,16 @@ def main():
 	
 	args = vars( parser.parse_args() )
 
+	if args['url'] == None:
+		print( 'Must specify a url to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
+		sys.exit()
+		
+	if args['common-words'] == None:
+		print( 'Must specify a common-words file to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
+		sys.exit()
+
 	""" Make sure that required arguments are present """
 	if args['fuzzer-action'] == 'discover':
-		if args['url'] == None:
-			print( 'Must specify a url to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
-			sys.exit()
-		
-		if args['common-words'] == None:
-			print( 'Must specify a common-words file to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
-			sys.exit()
-
 		session = requests.Session()
 		page = session.get( args['url'] )
 			
@@ -73,8 +73,13 @@ def main():
 			page = session.get(custom_auth[args['custom-auth']]["login_url"])
 		
 	elif args['fuzzer-action'] == 'test':
-		print( 'Test functionality will be available in Release 2. Use \'python fuzz.py -h\' for more help.' )
-		sys.exit()
+		if args['vectors'] == None:
+			print( 'Must specify a vectors file to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
+			sys.exit()
+
+		if args['sensitive'] == None:
+			print( 'Must specify a sensitive file to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
+			sys.exit()
 	else:
 		print( 'Must specify either \'Discover\' or \'Test\' for the fuzzer action. Use \'python fuzz.py -h\' for more help.' )
 		sys.exit()
@@ -108,6 +113,7 @@ def main():
 
 	else:
 		""" fuzzer-action == 'test' """
+		# Send arguments to necessary testing file, where files can be retrieved
 		pass
 
 
