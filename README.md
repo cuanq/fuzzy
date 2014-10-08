@@ -48,7 +48,7 @@ http://www.se.rit.edu/~swen-331/projects/fuzzer/
 
 Note: Discover MUST be run before testing, because links discovered will then be tested
 
-## Vulnerabilities
+### Vulnerabilities
 Fuzzy uses test vectors to check for the following:
 1. Cross-Site Scripting (XSS)
 2. Buffer Overflows
@@ -59,7 +59,7 @@ Fuzzy uses test vectors to check for the following:
 7. XML Injection
 These vectors were obtained from https://www.owasp.org/index.php/OWASP_Testing_Guide_Appendix_C:_Fuzz_Vectors
 
-## Usage
+### Usage
 
 1. Following the directions in Installation and Setup
 2. Follow the directions in Discover for the website you want to test
