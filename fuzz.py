@@ -30,6 +30,18 @@ def main():
 	
 	parser.add_argument( '--common-words', dest = 'common-words', 
 		help = 'Newline-delimited file of common words to be used in page guessing and input guessing. This argument is Required.' )
+
+	parser.add_argument( '--vectors', dest = 'vectors',
+		help = 'Newline-delimited file of common exploits to vulnerabilities. Required.' )
+
+	parser.add_argument( '--sensitive', dest = 'sensitive',
+		help = 'Newline-delimited file data that should never be leaked. It\'s assumed that this data is in the application\'s database (e.g. test data), but is not reported in any response. Required.' )
+
+	parser.add_argument( '--random', dest = 'random',
+		help = 'When off, try each input to each page systematically.  When on, choose a random page, then a random input field and test all vectors. Default: false.' )
+
+	parser.add_argument( '--slow', dest = 'slow',
+		help = 'Number of milliseconds considered when a response is considered "slow". Default is 500 milliseconds.' )
 	
 	args = vars( parser.parse_args() )
 
@@ -59,32 +71,6 @@ def main():
 		elif args['custom-auth'] == 'bodgeit':
 			session = requests.Session()
 			page = session.get(custom_auth[args['custom-auth']]["login_url"])
-
-
-		""" Handle the given arguments based on the action """
-		# Create lists from discovered links
-		discovered_links	= discovery.discoverLink( args['url'] )
-		guessed_links		= discovery.guessPage( page, args['common-words'], discovered_links, session)
-
-		# Merge the two lists for a full link array
-		all_links = discovered_links + guessed_links
-		input_list = []
-		print_input = discoverPrintOut( discovered_links, guessed_links )
-
-		input_list = discovery.parseURL(all_links)
-		inputPrintOut( input_list, print_input )
-
-		if discovery.discoverCookie(session) == False:
-			print( '\nWe have cookies too!' )
-
-		form_params = list()
-		for link in all_links:
-			""" Create page from link variable """
-			session = requests.Session()
-			this_page = session.get(link)
-			form_params.append(discovery.formParams(this_page))
-
-		paramPrintOut( form_params, print_input )
 		
 	elif args['fuzzer-action'] == 'test':
 		print( 'Test functionality will be available in Release 2. Use \'python fuzz.py -h\' for more help.' )
@@ -92,7 +78,38 @@ def main():
 	else:
 		print( 'Must specify either \'Discover\' or \'Test\' for the fuzzer action. Use \'python fuzz.py -h\' for more help.' )
 		sys.exit()
-		
+
+	""" Handle the given arguments based on the action """
+	# Create lists from discovered links
+	discovered_links	= discovery.discoverLink( args['url'] )
+	guessed_links		= discovery.guessPage( page, args['common-words'], discovered_links, session)
+
+	# Merge the two lists for a full link array
+	all_links = discovered_links + guessed_links
+	input_list = []
+	
+	input_list = discovery.parseURL(all_links)
+
+	if discovery.discoverCookie(session) == False:
+		print( '\nWe have cookies too!' )
+
+	form_params = list()
+	for link in all_links:
+		""" Create page from link variable """
+		session = requests.Session()
+		this_page = session.get(link)
+		form_params.append(discovery.formParams(this_page))
+
+	""" What to do with gathered information from discovery """
+	if args['fuzzer-action'] == 'discover':
+		print_input = discoverPrintOut( discovered_links, guessed_links )
+		inputPrintOut( input_list, print_input )
+		paramPrintOut( form_params, print_input )
+
+	else:
+		""" fuzzer-action == 'test' """
+		pass
+
 
 def discoverPrintOut( discovered_links, guessed_links ):
 	print_input = input( 'Discovery completed.\n\nWould you like the results of the Fuzzing printed to:\n\t[d] - Document\n\t[t] - Terminal\n\t[b] - Both document and terminal\n\t[n] - Not Printed\nPrinting to discovery document will overwrite previous printings.\nInput: ' )
