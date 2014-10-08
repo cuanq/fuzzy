@@ -48,3 +48,6 @@ beautifulsoup4-4.3.2/doc/source/index.rst
 beautifulsoup4-4.3.2/scripts/demonstrate_parser_differences.py
 beautifulsoup4-4.3.2/scripts/demonstration_markup.txt
 beautifulsoup4-4.3.2/setup.py
+discovery_output.txt
+inputs_output.txt
+params_output.txt
