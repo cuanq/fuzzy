@@ -3,23 +3,24 @@ File: httpresponse.py
 Authors: Zack Downs <zjd2035@gmail.com>, Danielle Gonzalez <dng2551@rit.edu>, Stephan Wlodarczyk <stephanjwlodarczyk@gmail.com>
 """
 import requests 
+import random
 
 class HttpResponse():
 
-    def run(forms, strategy, test_options):
-        vectors = open(test_options['vectors'], "r").read().splitlines()
+    def run(self, forms, args, strategy):
+        vectors = strategy.getVectors()
         
-        if test_options['random'].lower() == 'false':
+        if args['random'].lower() == 'false':
             for form in forms['form']:
                 for vector in vectors:
-                    # TODO: add vulnerability strategy call
+                    response = strategy.runVector(vector,form)
                     if response.status_code != requests.codes.ok:
                         print('Incorrect status code returned by ' + forms['url'] + '\n' + 'code: ' 
                                  + response.status_code + ' with vector ' + vector '\n')
         else:
-            # somehow randomly choose a form 
+            form = random.choice(forms['form'])
             for vector in vectors:
-                # TODO: add vulnerability strategy call
+                response = strategy.runVector(vector,form)
                 if response.status_code != requests.codes.ok:
                     print('Incorrect status code returned by ' + forms['url'] + '\n' + 'code: ' 
                              + response.status_code + ' with vector ' + vector '\n')

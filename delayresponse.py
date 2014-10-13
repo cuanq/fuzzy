@@ -1,4 +1,6 @@
 import time
+import random
+
 """
 File: delayresponse.py
 Authors: Zack Downs <zjd2035@gmail.com>, Danielle Gonzalez <dng2551@rit.edu>, Stephan Wlodarczyk <stephanjwlodarczyk@gmail.com>
@@ -6,24 +8,24 @@ Authors: Zack Downs <zjd2035@gmail.com>, Danielle Gonzalez <dng2551@rit.edu>, St
 
 class DelayResponse():
 
-    def run(forms, strategy, test_options):
-        delay = test_options['slow']
-        vectors = open(test_options['vectors'], "r").read().splitlines()
+    def run(self, forms, args, strategy):
+        delay = args['slow']
+        vectors = strategy.getVectors()
 
-        if test_options['random'].lower() == 'false':
+        if args['random'].lower() == 'false':
             
             for form in forms['form']:
                 for vector in vectors:
                     begin = time.time()
-                    # TODO: add vulnerability strategy call
+                    response = strategy.runVector(vector,form)
                     end = time.time()
                     if(end - begin) > DelayResponse:
                         print(forms['url'] + ' had a delayed response of ' + end + ' with this vectors:' + vector + '\n')
         else:
-            # TODO: randomly choose a form here somehow
+            form = random.choice(forms['form'])
             for vector in vectors:
                 begin = time.time()
-                # TODO: add vulnerability strategy call
+                response = strategy.runVector(vector,form)
                 end = time.time()
                 if(end - begin) > DelayResponse:
                     print(forms['url'] + ' had a delayed response of ' + end + ' with this vectors:' + vector + '\n')
