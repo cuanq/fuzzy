@@ -82,7 +82,7 @@ def formParams(link):
 	forms = list()
 
 	for form in pageSoup.find_all('form'):
-		form_dict = {'url':link, 'action':'', 'name':'', 'method':'', 'input': list()}
+		form_dict = {'url':link, 'action':'', 'name':'', 'method':'', 'inputs': list()}
 
 		if form.has_attr('name'):
 			form_dict['name'] = form['name']
@@ -92,7 +92,7 @@ def formParams(link):
 			form_dict['method'] = form['method']
 
 			for form_field in form.find_all('input'):
-				if form_field.has_key('name'):
+				if form_field.has_attr('name'):
 					form_dict['inputs'].append(form_field['name'])
 
 			forms.append(form_dict)

@@ -56,27 +56,8 @@ def main():
 	if args['common-words'] == None:
 		print( 'Must specify a common-words file to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
 		sys.exit()
-
-	""" Make sure that required arguments are present """
-	if args['fuzzer-action'] == 'discover':
-		session = requests.Session()
-		page = session.get( args['url'] )
-			
-		if args['custom-auth'] == 'dvwa':
-			payload = {
-				"username": custom_auth[args['custom-auth']]["username"],
-				"password": custom_auth[args['custom-auth']]["password"],
-				"login": "login"
-			}
-			session = requests.Session()
-			session.post(custom_auth[args['custom-auth']]["login_url"], data=payload)			
-			page = session.get(args['url'] + "/" + args['custom-auth'])
-			
-		elif args['custom-auth'] == 'bodgeit':
-			session = requests.Session()
-			page = session.get(custom_auth[args['custom-auth']]["login_url"])
 		
-	elif args['fuzzer-action'] == 'test':
+	if args['fuzzer-action'].lower() == 'test':
 		if args['vectors'] == None:
 			print( 'Must specify a vectors file to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
 			sys.exit()
@@ -90,9 +71,27 @@ def main():
 
 		if args['slow'] == None:
 			args['slow'] = 500
-	else:
+			
+	elif args['fuzzer-action'].lower() != 'test' or args['fuzzer-action'].lower() != 'discover':
 		print( 'Must specify either \'Discover\' or \'Test\' for the fuzzer action. Use \'python fuzz.py -h\' for more help.' )
 		sys.exit()
+
+	session = requests.Session()
+	page = session.get( args['url'] )
+		
+	if args['custom-auth'] == 'dvwa':
+		payload = {
+			"username": custom_auth[args['custom-auth']]["username"],
+			"password": custom_auth[args['custom-auth']]["password"],
+			"login": "login"
+		}
+		session = requests.Session()
+		session.post(custom_auth[args['custom-auth']]["login_url"], data=payload)			
+		page = session.get(args['url'] + "/" + args['custom-auth'])
+		
+	elif args['custom-auth'] == 'bodgeit':
+		session = requests.Session()
+		page = session.get(custom_auth[args['custom-auth']]["login_url"])
 
 	""" Handle the given arguments based on the action """
 	# Create lists from discovered links
