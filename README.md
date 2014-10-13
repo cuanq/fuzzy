@@ -46,8 +46,6 @@ http://www.se.rit.edu/~swen-331/projects/fuzzer/
 
 ## Testing
 
-Note: Discover MUST be run before testing, because links discovered will then be tested
-
 ### Vulnerabilities
 Fuzzy uses test vectors to check for the following:
     1. Cross-Site Scripting (XSS)
@@ -62,8 +60,7 @@ These vectors were obtained from https://www.owasp.org/index.php/OWASP_Testing_G
 ### Usage
 
 1. Following the directions in Installation and Setup
-2. Follow the directions in Discover for the website you want to test
-3. Type the command: 
+2. Type the command: 
     ``` python
     python fuzz.py test [Link] [Options] --sensitive=[Sensitive] --vectors=[Vectors]
     ```
