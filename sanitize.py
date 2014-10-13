@@ -7,66 +7,38 @@ import random
 
 class Sanitization():
 
-	def _run(self, forms, vulnerability):
-		"""
-		execute vulernability - fuzz all inputs and make sure 
-		they have been sanitized
-		"""
-		vectors = vulernability._getVectors()
+	def run(self, forms, args, vulnerability):
 
-		logger.info("Checking that input has been sanitized, random is currently set to " \
-						+ vulernability.options[random)
+		vectors = vulernability.getVectors()
 
-		for page in pages:
-			forms = page.get("inputs").get("forms")
-			url = page.get("url")
-			
-			if vulernability.options.random == "False" or vulernability.options.random == "false":
+		print("Checking for sanitized input; random = " + args["random"])
 		
-				# sequentially fuzz forms..
-				for form in forms:
-					for vector in vectors:
-						response = vulernability._executeVector(url, vector, form)
+		if args["random"].lower() == "true":
+			for form in forms:
+				for vector in vectors:
+					response = vulernability.runVector(form, vector)
 
-						if response != None:
-							self._checkForSanitization(vector, response, url)
-			else:
-			
-				if len(forms) > 0:
-					form = random.choice(forms) # randomly choose a form
-
-					for vector in vectors:
-						response = vulernability._executeVector(url, vector, form)
-
-						if response != None:
-							self._checkForSanitization(vector, response, url)
-
-		logger.info("Sanitization checks complete")
-
-
-	def _checkForSQLExploit(self, response, url):
-		"""
-		checks if the response has a sql exploit 
-		"""
+					if response != None:
+						checkSanitization(vector, response, form["url"])
+		else:
 		
+			if len(forms) > 0:
+				form = random.choice(forms)
+
+				for vector in vectors:
+					response = vulernability.runVector(form, vector)
+
+					if response != None:
+						checkSanitization(vector, response, form["url"])
+
+	def checkSQLExploit(self, response, url):	
 		if "MySQL " in response.text:
-			logger.info("Possible SQL exploit found on page: " + url)
-
-
-	def _checkForSpecialChars(self, vector, response, url):
-		"""
-		checks to see that a few of the common special characters if in the vector has been 
-		sanitized in 'da' response
-		"""
-
+			print("SQL exploit found: " + url)
+	def checkSpecialChars(self, vector, response, url):
 		if "<" in vector or ">" in vector or "/" in vector or "\"" in vector or "?" in vector:
 			if vector in response.text:
-				logger.info("Special characters were not sanitized or escaped in page " + url)
+				print("Special characters have not be escaped/santized: " + url)
 
-
-	def _checkForSanitization(self, vector, response, url):
-		""" 
-		checks that response has been sanitized. 
-		"""
-		self._checkForSQLExploit(response, url)
-		self._checkForSpecialChars(vector, response, url)
+	def checkSanitization(self, vector, response, url):
+		checkSQLExploit(response, url)
+		checkSpecialChars(vector, response, url)
