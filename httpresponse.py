@@ -14,4 +14,12 @@ class HttpResponse():
                 for vector in vectors:
                     # TODO: add vulnerability strategy call
                     if response.status_code != requests.codes.ok:
-                        print("+ '\n'")
+                        print('Incorrect status code returned by ' + forms['url'] + '\n' + 'code: ' 
+                                 + response.status_code + ' with vector ' + vector '\n')
+        else:
+            # somehow randomly choose a form 
+            for vector in vectors:
+                # TODO: add vulnerability strategy call
+                if response.status_code != requests.codes.ok:
+                    print('Incorrect status code returned by ' + forms['url'] + '\n' + 'code: ' 
+                             + response.status_code + ' with vector ' + vector '\n')
