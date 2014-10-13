@@ -84,6 +84,12 @@ def main():
 		if args['sensitive'] == None:
 			print( 'Must specify a sensitive file to begin fuzzing. Use \'python fuzz.py -h\' for more help.' )
 			sys.exit()
+
+		if args['random'] == None:
+			args['random'] = False
+
+		if args['slow'] == None:
+			args['slow'] = 500
 	else:
 		print( 'Must specify either \'Discover\' or \'Test\' for the fuzzer action. Use \'python fuzz.py -h\' for more help.' )
 		sys.exit()
