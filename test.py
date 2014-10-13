@@ -8,17 +8,17 @@ import random
 Takes in an assortment of web urls, and user enabled 
 testing options (i.e. vectors, sensititive, random, slow)
 """
-def test_pages(forms, testing_options):
+def test_pages(forms, args):
 
 	""" Setup strategy """
-	if testing_options["random"].lower() == "true"
+	if args["random"].lower() == "true"
 		print("random shuffling enabled")
-		random.shuffle(url)
+		random.shuffle(forms)
 
-	sanitize = VulnerabilityStrategy(forms, Sanitization(), testing_options)
-	delayResponse = VulnerabilityStrategy(forms, DelayReponse(), testing_options)
-	httpResponse = VulnerabilityStrategy(forms, HttpResponse(), testing_options)
-	sensistive = VulnerabilityStrategy(forms, SensitiveData(), testing_options)
+	sanitize = VulnerabilityStrategy(forms, Sanitization(), args)
+	delayResponse = VulnerabilityStrategy(forms, DelayReponse(), args)
+	httpResponse = VulnerabilityStrategy(forms, HttpResponse(), args)
+	sensistive = VulnerabilityStrategy(forms, SensitiveData(), args)
 
 	sanitize.run()
 	delayResponse.run()
