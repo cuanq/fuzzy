@@ -6,4 +6,10 @@ import requests
 
 class HttpResponse():
 
-    def run():
+    def run(forms, strategy, test_options):
+        vectors = open(test_options['vectors'], "r").read().splitlines()
+        
+        if test_options['random'].lower() == 'false':
+            for form in forms:
+                for vector in vectors:
+                    # TODO: 
