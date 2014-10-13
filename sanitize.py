@@ -9,14 +9,14 @@ class Sanitization():
 
 	def run(self, forms, args, vulnerability):
 
-		vectors = vulernability.getVectors()
+		vectors = vulnerability.getVectors()
 
 		print("Checking for sanitized input; random = " + args["random"])
 		
-		if args["random"].lower() == "true":
+		if args["random"].lower() == "false":
 			for form in forms:
 				for vector in vectors:
-					response = vulernability.runVector(form, vector)
+					response = vulnerability.runVector(form, vector)
 
 					if response != None:
 						checkSanitization(vector, response, form["url"])
@@ -26,7 +26,7 @@ class Sanitization():
 				form = random.choice(forms)
 
 				for vector in vectors:
-					response = vulernability.runVector(form, vector)
+					response = vulnerability.runVector(form, vector)
 
 					if response != None:
 						checkSanitization(vector, response, form["url"])
