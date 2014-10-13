@@ -50,13 +50,13 @@ Note: Discover MUST be run before testing, because links discovered will then be
 
 ### Vulnerabilities
 Fuzzy uses test vectors to check for the following:
-1. Cross-Site Scripting (XSS)
-2. Buffer Overflows
-3. Format String Errors 
-4. Integer Overflows
-5. SQL Injection - Active AND Passive
-6. LDAP Injection
-7. XML Injection
+    1. Cross-Site Scripting (XSS)
+    2. Buffer Overflows
+    3. Format String Errors 
+    4. Integer Overflows
+    5. SQL Injection - Active AND Passive
+    6. LDAP Injection
+    7. XML Injection
 These vectors were obtained from https://www.owasp.org/index.php/OWASP_Testing_Guide_Appendix_C:_Fuzz_Vectors
 
 ### Usage
