@@ -8,7 +8,7 @@ Authors: Zack Downs <zjd2035@gmail.com>, Danielle Gonzalez <dng2551@rit.edu>, St
 
 class DelayResponse():
 
-    def run(forms, args, strategy):
+    def run(self, forms, args, strategy):
         delay = args['slow']
         vectors = strategy.getVectors()
 

@@ -7,7 +7,7 @@ import random
 
 class HttpResponse():
 
-    def run(forms, args, strategy):
+    def run(self, forms, args, strategy):
         vectors = strategy.getVectors()
         
         if args['random'].lower() == 'false':
