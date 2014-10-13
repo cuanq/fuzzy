@@ -86,7 +86,7 @@ def main():
 			sys.exit()
 
 		if args['random'] == None:
-			args['random'] = False
+			args['random'] = "False"
 
 		if args['slow'] == None:
 			args['slow'] = 500
