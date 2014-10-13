@@ -11,7 +11,7 @@ testing options (i.e. vectors, sensititive, random, slow)
 def test_pages(forms, args):
 
 	""" Setup strategy """
-	if args["random"].lower() == "true"
+	if args["random"].lower() == "true":
 		print("random shuffling enabled")
 		random.shuffle(forms)
 
