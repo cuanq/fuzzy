@@ -16,11 +16,11 @@ class HttpResponse():
                     response = strategy.runVector(vector,form)
                     if response.status_code != requests.codes.ok:
                         print('Incorrect status code returned by ' + forms['url'] + '\n' + 'code: ' 
-                                 + response.status_code + ' with vector ' + vector '\n')
+                                 + response.status_code + ' with vector ' + vector + '\n')
         else:
             form = random.choice(forms['form'])
             for vector in vectors:
                 response = strategy.runVector(vector,form)
                 if response.status_code != requests.codes.ok:
                     print('Incorrect status code returned by ' + forms['url'] + '\n' + 'code: ' 
-                             + response.status_code + ' with vector ' + vector '\n')
+                             + response.status_code + ' with vector ' + vector + '\n')

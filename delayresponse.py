@@ -19,7 +19,7 @@ class DelayResponse():
                     begin = time.time()
                     response = strategy.runVector(vector,form)
                     end = time.time()
-                    if(end - begin) > DelayResponse:
+                    if(end - begin) > delay:
                         print(forms['url'] + ' had a delayed response of ' + end + ' with this vectors:' + vector + '\n')
         else:
             form = random.choice(forms['form'])
@@ -27,7 +27,7 @@ class DelayResponse():
                 begin = time.time()
                 response = strategy.runVector(vector,form)
                 end = time.time()
-                if(end - begin) > DelayResponse:
+                if(end - begin) > delay:
                     print(forms['url'] + ' had a delayed response of ' + end + ' with this vectors:' + vector + '\n')
 
 
