@@ -7,16 +7,16 @@ import random
 class SensitiveData():
 
     def run( self, forms, args, strategy ):
-    	vectors = open(test_options['vectors'], "r").read().splitlines()
+    	vectors = open(args['vectors'], "r").read().splitlines()
 
     	if args['random'].lower() == "true":
     		form = random.choice(forms)
     		for vector in vectors:
-    			response = strat.runVector( form, vector )
+    			response = strategy.runVector( form, vector )
 
     			if response != None:
     				sensitive = open( args["sensitive"], "r").read().splitlines()
-    				checkSensitive( vector, response, sensitive, form )
+    				self.checkSensitive( vector, response, sensitive, form )
 
     	else:
     		for form in forms:
@@ -25,7 +25,7 @@ class SensitiveData():
 
     				if response != None:
     					sensitive = open( args["sensitive"], "r").read().splitlines()
-    					checkSensitive( vector, response, sensitive, form )
+    					self.checkSensitive( vector, response, sensitive, form )
 
     def checkSensitive( self, vector, response, sensitive, form):
     	for data in sensitive:

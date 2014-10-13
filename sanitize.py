@@ -19,7 +19,7 @@ class Sanitization():
 					response = vulnerability.runVector(form, vector)
 
 					if response != None:
-						checkSanitization(vector, response, form["url"])
+						self.checkSanitization(vector, response, form["url"])
 		else:
 		
 			if len(forms) > 0:
@@ -29,7 +29,7 @@ class Sanitization():
 					response = vulnerability.runVector(form, vector)
 
 					if response != None:
-						checkSanitization(vector, response, form["url"])
+						self.checkSanitization(vector, response, form["url"])
 
 	def checkSQLExploit(self, response, url):	
 		if "MySQL " in response.text:
@@ -40,5 +40,5 @@ class Sanitization():
 				print("Special characters have not be escaped/santized: " + url)
 
 	def checkSanitization(self, vector, response, url):
-		checkSQLExploit(response, url)
-		checkSpecialChars(vector, response, url)
+		self.checkSQLExploit(response, url)
+		self.checkSpecialChars(vector, response, url)

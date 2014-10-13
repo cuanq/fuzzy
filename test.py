@@ -15,9 +15,6 @@ Takes in an assortment of web urls, and user enabled
 testing options (i.e. vectors, sensititive, random, slow)
 """
 def test_pages(forms, args):
-	
-	for form in forms:
-		print("1 " + form + " 2")
 
 	""" Setup strategy """
 	if args["random"].lower() == "true":

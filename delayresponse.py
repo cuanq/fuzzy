@@ -14,21 +14,21 @@ class DelayResponse():
 
         if args['random'].lower() == 'false':
             
-            for form in forms['form']:
+            for form in forms:
                 for vector in vectors:
                     begin = time.time()
-                    response = strategy.runVector(vector,form)
+                    response = strategy.runVector(form, vector)
                     end = time.time()
                     if(end - begin) > delay:
-                        print(forms['url'] + ' had a delayed response of ' + end + ' with this vectors:' + vector + '\n')
+                        print(form['url'] + ' had a delayed response of ' + end + ' with this vectors:' + vector + '\n')
         else:
-            form = random.choice(forms['form'])
+            form = random.choice(forms)
             for vector in vectors:
                 begin = time.time()
-                response = strategy.runVector(vector,form)
+                response = strategy.runVector(form, vector)
                 end = time.time()
                 if(end - begin) > delay:
-                    print(forms['url'] + ' had a delayed response of ' + end + ' with this vectors:' + vector + '\n')
+                    print(form['url'] + ' had a delayed response of ' + end + ' with this vectors:' + vector + '\n')
 
 
 
