@@ -97,7 +97,7 @@ def formParams(link):
 
 			forms.append(form_dict)
 
-	return form_dict
+	return forms
 
 
 
