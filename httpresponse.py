@@ -10,6 +10,8 @@ class HttpResponse():
         vectors = open(test_options['vectors'], "r").read().splitlines()
         
         if test_options['random'].lower() == 'false':
-            for form in forms:
+            for form in forms['form']:
                 for vector in vectors:
-                    # TODO: 
+                    # TODO: add vulnerability strategy call
+                    if response.status_code != requests.codes.ok:
+                        print("+ '\n'")

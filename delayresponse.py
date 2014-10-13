@@ -12,13 +12,13 @@ class DelayResponse():
 
         if test_options['random'].lower() == 'false':
             
-            for form in forms:
+            for form in forms['form']:
                 for vector in vectors:
                     begin = time.time()
                     # TODO: add vulnerability strategy call
                     end = time.time()
                     if(end - begin) > DelayResponse:
-                        print(forms['url'] + ' had a delayed response of ' + end + ' with this vectors: \n' + vector)
+                        print(forms['url'] + ' had a delayed response of ' + end + ' with this vectors:' + vector + '\n')
         else:
             # TODO: randomly choose a form here somehow
             for vector in vectors:
@@ -26,7 +26,7 @@ class DelayResponse():
                 # TODO: add vulnerability strategy call
                 end = time.time()
                 if(end - begin) > DelayResponse:
-                    print(forms['url'] + ' had a delayed response of ' + end + ' with this vectors: \n' + vector)
+                    print(forms['url'] + ' had a delayed response of ' + end + ' with this vectors:' + vector + '\n')
 
 
 
