@@ -4,6 +4,7 @@ import custom_auth
 from urllib.parse import urljoin
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
+from collections import defaultdict
 
 # Fuzzer should keep a list of URLs that it can reach from init page
 # no off-site links
@@ -73,18 +74,30 @@ def discoverCookie(session):
 	
 	return isCookieJarEmpty
 
-def formParams(page):
+def formParams(link):
+	session = requests.Session()
+	page = session.get(link)
 	pageSoup = BeautifulSoup(page.content)
 
-	form_params = list()
+	forms = list()
 
-	for element in pageSoup.find_all('input'):
-		if element.has_attr('type') and element.has_attr('name'):
-			if element['type'] != 'hidden':
-				formParam = { 'type':element['type'], 'name':element['name'] }
-				form_params.append( formParam )
+	for form in pageSoup.find_all('form'):
+		form_dict = {'url':link, 'action':'', 'name':'', 'method':'', 'input': list()}
 
-	return form_params
+		if form.has_attr('name'):
+			form_dict['name'] = form['name']
+
+		if form.has_attr('action') and form.has_attr('method'):
+			form_dict['action'] = form['action']
+			form_dict['method'] = form['method']
+
+			for form_field in form.find_all('input'):
+				if form_field.has_key('name'):
+					form_dict['inputs'].append(form_field['name'])
+
+			forms.append(form_dict)
+
+	return form_dict
 
 
 

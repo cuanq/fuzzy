@@ -6,6 +6,7 @@ Authors: Zack Downs <zjd2035@gmail.com>, Danielle Gonzalez <dng2551@rit.edu>, St
 import argparse
 import sys
 from custom_auth import *
+from collections import defaultdict
 
 # Import Beautiful Soup for web scraping
 from bs4 import BeautifulSoup
@@ -15,6 +16,9 @@ import requests
 
 # Import Discover and Auth for handling input
 import discovery
+
+# Import Test for fuzz testing
+import test
 
 def main():
 	parser = argparse.ArgumentParser( description = 'Fuzzer for website security testing.' )
@@ -98,23 +102,23 @@ def main():
 	if discovery.discoverCookie(session) == False:
 		print( '\nWe have cookies too!' )
 
-	form_params = list()
+	form_dict = list()
 	for link in all_links:
-		""" Create page from link variable """
-		session = requests.Session()
-		this_page = session.get(link)
-		form_params.append(discovery.formParams(this_page))
+		""" Get all forms from links """
+		forms = discovery.formParams(link)
+		for form in forms:
+			form_dict.append( form )
 
 	""" What to do with gathered information from discovery """
 	if args['fuzzer-action'] == 'discover':
 		print_input = discoverPrintOut( discovered_links, guessed_links )
 		inputPrintOut( input_list, print_input )
-		paramPrintOut( form_params, print_input )
+		paramPrintOut( form_dict, print_input )
 
 	else:
 		""" fuzzer-action == 'test' """
 		# Send arguments to necessary testing file, where files can be retrieved
-		pass
+		test.test_pages( form_dict, args )
 
 
 def discoverPrintOut( discovered_links, guessed_links ):
@@ -226,49 +230,45 @@ def inputPrintOut( input_list, print_input ):
 
 	print( 'Fuzzer Input Parsing completed.\n' )
 
-def paramPrintOut( form_params, print_input ):
+""" MUST REHANDLE PRINTOUT OF FORMS """
+def formsPrintOut( forms, print_input ):
 	if print_input == 't':
-		print( 'Form Param Printout:\n' )
-		print( '\t- Form Params -\n' )
-		for param in form_params:
-			this_type = param[0]['type']
-			this_name = param[0]['name']
-			print( 'Input Type: ' + this_type + ', Input Name: ' + this_name + '\n' )
-		print( 'Form Params printed to Terminal.' )
+		print( 'Form Printout:\n' )
+		print( '\t- Forms -\n' )
+		for form in forms:
+			form_name = form['name']
+			print( 'Form Name: ' + form_name + '\n' )
+		print( 'Forms printed to Terminal.' )
 
 	elif print_input == 'd':
-		paramsFile = open( 'params_output.txt', 'w+' )
-		paramsFile.write( 'Form Param Printout:\n' )
-		paramsFile.write( '\t- Form Params -\n' )
-		for param in form_params:
-			this_type = param[0]['type']
-			this_name = param[0]['name']
-			paramsFile.write( 'Input Type: ' + this_type + ', Input Name: ' + this_name + '\n' )
+		formsFile = open( 'forms_output.txt', 'w+' )
+		formsFile.write( 'Form Printout:\n' )
+		formsFile.write( '\t- Forms -\n' )
+		for form in forms:
+			form_name = form['name']
+			formsFile.write( 'Form Name:' + form_name + '\n' )
 
-		print( 'Form Params printed to params_output.txt' )
+		print( 'Forms printed to forms_output.txt' )
 
 	elif print_input == 'b':
-		print( 'Form Param Printout:\n' )
-		print( '\t- Form Params -\n' )
-		for param in form_params:
-			this_type = param[0]['type']
-			this_name = param[0]['name']
-			print( 'Input Type: ' + this_type + ', Input Name: ' + this_name + '\n' )
+		print( 'Form Printout:\n' )
+		print( '\t- Forms -\n' )
 
-		paramsFile = open( 'params_output.txt', 'w+' )
-		paramsFile.write( 'Form Param Printout:\n' )
-		paramsFile.write( '\t- Form Params -\n' )
-		for param in form_params:
-			this_type = param[0]['type']
-			this_name = param[0]['name']
-			paramsFile.write( 'Input Type: ' + this_type + ', Input Name: ' + this_name + '\n' )
+		formsFile = open( 'forms_output.txt', 'w+' )
+		formsFile.write( 'Form Printout:\n' )
+		formsFile.write( '\t- Forms -\n' )
 
-		print( 'Form Params Printed to Terminal and params_output.txt. ' )
+		for form in forms:
+			form_name = form['name']
+			print( 'Form Name: ' + form_name + '\n' )
+			formsFile.write( 'Form Name: ' + form_name + '\n' )
+
+		print( 'Forms Printed to Terminal and forms_output.txt. ' )
 
 	else:
-		print( 'Did not print Form Params.' )
+		print( 'Did not print Forms.' )
 
-	print( 'Fuzzer Form Params completed.' )
+	print( 'Fuzzer Form Scanning completed.' )
 
 if __name__ == '__main__':
 	main()
